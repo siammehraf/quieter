@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-gradient="midnight">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quieter</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon16.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="bg-photo" class="bg-layer bg-photo" aria-hidden="true"></div>
+  <div id="bg-gradient" class="bg-layer bg-gradient" aria-hidden="true"></div>
+  <div id="bg-grain" class="bg-layer bg-grain" aria-hidden="true"></div>
+  <div id="bg-dimmer" class="bg-layer bg-dimmer" aria-hidden="true"></div>
+
+  <main id="app-stage" class="stage">
+    <!-- Top Header & Optional Toggleable Bookmarks Strip -->
+    <div class="top-cluster ui-chrome">
+      <header class="top-bar">
+        <div class="brand-left">
+          <div class="brand-monogram" id="monogram-display" title="Personal Monogram">@siammehraf</div>
+        </div>
+
+        <div class="top-controls" id="top-controls">
+          <button id="btn-prev-quote" class="icon-btn" title="Previous Quote (Left Arrow)" aria-label="Previous Quote" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button id="btn-next-quote" class="icon-btn" title="Next Quote (Right Arrow)" aria-label="Next Quote">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+          </button>
+          <button id="btn-fav-quote" class="icon-btn" title="Star / Favorite Quote" aria-label="Favorite Quote">
+            <svg id="icon-star" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </button>
+          <button id="btn-copy-quote" class="icon-btn" title="Copy Quote" aria-label="Copy Quote">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </button>
+          <button id="btn-export-png" class="icon-btn" title="Export Quote as PNG Card" aria-label="Export Quote as PNG">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          </button>
+          <button id="btn-calm-mode" class="icon-btn" title="Calm Mode (Esc to exit)" aria-label="Toggle Calm Mode">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+          <button id="btn-theme-toggle" class="icon-btn" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+            <svg id="icon-sun" class="hidden" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <svg id="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+          <button id="btn-open-drawer" class="icon-btn" title="Quotes & Settings" aria-label="Open Studio Drawer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Optional Glassy Bookmarks Bar Strip -->
+      <nav id="bookmarks-bar" class="bookmarks-strip hidden" aria-label="Bookmarks Bar"></nav>
+    </div>
+
+    <!-- Center Editorial Zone -->
+    <section class="center-stack">
+      <div class="clock-block ui-chrome">
+        <div id="clock-time" class="clock-time">00:00</div>
+        <div id="clock-date" class="clock-date">Loading...</div>
+      </div>
+
+      <!-- Spotlight Search Bar with Multi-Engine Prefixes (yt, gh, w, ddg, g) -->
+      <form id="search-form" class="search-wrap ui-chrome" action="https://www.google.com/search" method="GET" autocomplete="off">
+        <span class="search-engine-pill" id="search-engine-pill" title="Prefixes: yt, gh, w, ddg, g">
+          <svg id="search-google-icon" width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M21.35 11.1H12v3.2h5.35c-.25 1.35-1.05 2.5-2.2 3.25v2.7h3.55c2.08-1.92 3.28-4.75 3.28-8.15 0-.68-.06-1.35-.18-2z" fill="#4285F4"/>
+            <path d="M12 22c2.97 0 5.46-.98 7.28-2.66l-3.55-2.7c-.98.66-2.23 1.06-3.73 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 19.6 7.7 22 12 22z" fill="#34A853"/>
+            <path d="M5.84 13.17c-.22-.66-.35-1.36-.35-2.17s.13-1.51.35-2.17V5.99H2.18C1.43 7.48 1 9.19 1 11s.43 3.52 1.18 5.01l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 4.3c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.09 14.97 0 12 0 7.7 0 3.99 2.4 2.18 5.99l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          <span id="search-engine-label" class="hidden"></span>
+        </span>
+        <input id="search-input" type="text" name="q" placeholder="Search Google, type URL, or prefix (yt, gh, w)…" aria-label="Search" />
+        <kbd class="search-kbd" id="search-kbd-hint">/</kbd>
+      </form>
+
+      <article class="quote-stage" aria-live="polite">
+        <blockquote id="quote-text" class="quote-text"></blockquote>
+        <div class="quote-meta">
+          <span class="quote-dash">—</span>
+          <cite id="quote-author" class="quote-author"></cite>
+          <span id="quote-category-badge" class="quote-badge hidden"></span>
+        </div>
+      </article>
+    </section>
+
+    <footer class="shortcuts-dock ui-chrome">
+      <div id="tiles-grid" class="tiles-grid" role="list"></div>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Right-Click Tile Context Menu -->
+  <div id="tile-context-menu" class="context-menu glass-panel hidden" role="menu">
+    <button type="button" class="ctx-item" id="ctx-pin-tile" role="menuitem">Pin as Favourite</button>
+    <button type="button" class="ctx-item" id="ctx-edit-tile" role="menuitem">Edit Name & URL</button>
+    <button type="button" class="ctx-item danger" id="ctx-hide-tile" role="menuitem">Remove / Hide</button>
+  </div>
+
+  <!-- Add / Edit Favourite Site Modal -->
+  <div id="site-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="site-modal-title">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h3 id="site-modal-title">Pin Favourite Site</h3>
+        <button id="btn-close-site-modal" class="icon-btn small" aria-label="Close">✕</button>
+      </div>
+      <form id="site-form" class="stack-form">
+        <label>
+          <span>Site Title</span>
+          <input type="text" id="site-title-input" placeholder="e.g. GitHub" required />
+        </label>
+        <label>
+          <span>URL</span>
+          <input type="text" id="site-url-input" placeholder="e.g. github.com" required />
+        </label>
+        <div class="modal-actions">
+          <button type="submit" class="btn primary">Save Shortcut</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Slide-Over Studio Drawer -->
+  <aside id="studio-drawer" class="drawer-backdrop hidden" aria-hidden="true">
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="drawer-tabs" role="tablist">
+          <button class="tab-btn active" data-tab="quotes" role="tab" aria-selected="true">Quotes</button>
+          <button class="tab-btn" data-tab="typography" role="tab" aria-selected="false">Typography</button>
+          <button class="tab-btn" data-tab="appearance" role="tab" aria-selected="false">Appearance</button>
+        </div>
+        <button id="btn-close-drawer" class="icon-btn small" aria-label="Close Drawer">✕</button>
+      </div>
+
+      <div class="drawer-body" id="drawer-body">
+        <!-- TAB 1: QUOTES & STAGE FILTER -->
+        <section id="tab-quotes" class="tab-pane active">
+          <div class="section-block">
+            <div class="section-title-row">
+              <h4>Stage Filter Mode</h4>
+              <div class="row-actions">
+                <span id="active-pool-count" class="muted-pill">0 active</span>
+                <button id="btn-reset-filter" type="button" class="btn ghost small hidden">Reset</button>
+              </div>
+            </div>
+            <p class="helper-text">Control which quotes rotate on your New Tab stage.</p>
+            <div class="row-2">
+              <label>
+                <span>Category</span>
+                <select id="filter-category-select">
+                  <option value="all">All Categories</option>
+                </select>
+              </label>
+              <label>
+                <span>Writer / Source</span>
+                <select id="filter-author-select">
+                  <option value="all">All Writers</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-title-row">
+              <h4>Add Single Quote</h4>
+              <span id="quote-count-label" class="muted-pill">0 saved</span>
+            </div>
+            <form id="add-quote-form" class="stack-form">
+              <textarea id="new-quote-text" rows="3" placeholder="Write or paste a line (English or বাংলা)..." required></textarea>
+              <div class="row-2">
+                <input type="text" id="new-quote-author" placeholder="Writer / Source" />
+                <input type="text" id="new-quote-category" placeholder="Category (e.g. resilience)" />
+              </div>
+              <button type="submit" class="btn primary">Add to Collection</button>
+            </form>
+          </div>
+
+          <div class="section-block">
+            <h4>Bulk Paste & File / Backup Import</h4>
+            <p class="helper-text">Paste lines as <code>Quote — Author</code>, or import <code>.txt</code>, <code>.md</code>, <code>.csv</code>, Kindle <code>My Clippings.txt</code>, or a <strong>Quieter Backup (.json)</strong>.</p>
+            <textarea id="bulk-paste-input" rows="3" placeholder="We are all in the gutter, but some of us are looking at the stars. — Oscar Wilde&#10;সময় কারো জন্য অপেক্ষা করে না। — সংগৃহীত"></textarea>
+            <div class="row-actions">
+              <button id="btn-parse-bulk" type="button" class="btn secondary">Preview & Import Text</button>
+              <label class="btn secondary file-btn">
+                Import File / Backup
+                <input type="file" id="import-file-input" accept=".txt,.md,.csv,.json" hidden />
+              </label>
+            </div>
+            <div id="bulk-preview-box" class="bulk-preview hidden">
+              <div class="preview-header">
+                <span id="bulk-preview-count">0 lines detected</span>
+                <button id="btn-confirm-bulk" type="button" class="btn primary small">Save All</button>
+              </div>
+              <ul id="bulk-preview-list" class="preview-list"></ul>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-title-row">
+              <h4>Portability & Full Backup</h4>
+            </div>
+            <p class="helper-text">Export your quotes alone or a complete snapshot (all quotes, categories, favorites, font pairings, themes & shortcuts).</p>
+            <div class="row-actions wrap">
+              <button id="btn-export-full" type="button" class="btn primary small">Export Full Backup</button>
+              <button id="btn-export-json" type="button" class="btn secondary small">Export Quotes Only</button>
+              <button id="btn-clear-quotes" type="button" class="btn danger small">Clear Quotes</button>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <input type="search" id="search-quotes-input" placeholder="Search saved quotes, writers, or categories..." class="compact-input" />
+            <ul id="saved-quotes-list" class="quotes-list"></ul>
+          </div>
+        </section>
+
+        <!-- TAB 2: TYPOGRAPHY & SCALE SLIDERS -->
+        <section id="tab-typography" class="tab-pane hidden">
+          <div class="section-block">
+            <h4>Quote & Writer Fonts</h4>
+            <p class="helper-text">English and বাংলা scripts are detected word-by-word automatically.</p>
+
+            <div class="font-grid">
+              <label>
+                <span>English Quote</span>
+                <select id="font-en-quote" class="font-selector"></select>
+              </label>
+              <label>
+                <span>English Writer</span>
+                <select id="font-en-author" class="font-selector"></select>
+              </label>
+              <label>
+                <span>Bangla Quote (বাংলা)</span>
+                <select id="font-bn-quote" class="font-selector"></select>
+              </label>
+              <label>
+                <span>Bangla Writer (বাংলা)</span>
+                <select id="font-bn-author" class="font-selector"></select>
+              </label>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Quote Size & Line Spacing</h4>
+            <div class="slider-group">
+              <label>
+                <span>Quote Font Scale (<output id="quote-scale-val">100</output>%)</span>
+                <input type="range" id="slider-quote-scale" min="70" max="145" value="100" />
+              </label>
+              <label class="mt-8">
+                <span>Line Spacing (<output id="quote-lh-val">1.48</output>)</span>
+                <input type="range" id="slider-quote-lh" min="1.15" max="2.10" step="0.05" value="1.48" />
+              </label>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Interface & Monogram Fonts</h4>
+            <p class="helper-text">Customize your monogram badge and UI typography (Clock, Date, Search, Bookmarks & Shortcut tab names).</p>
+
+            <div class="font-grid">
+              <label>
+                <span>Monogram Font</span>
+                <select id="font-monogram" class="font-selector"></select>
+              </label>
+              <label>
+                <span>UI & Tabs Font</span>
+                <select id="font-ui" class="font-selector"></select>
+              </label>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Use Fonts Installed on Your PC</h4>
+            <p class="helper-text">Scan local system fonts or type any installed font family name manually.</p>
+            <div class="row-actions">
+              <button id="btn-scan-pc-fonts" type="button" class="btn secondary">Scan PC Fonts</button>
+            </div>
+            <div class="row-2 mt-8">
+              <input type="text" id="custom-font-name" placeholder="Exact font name (e.g. Siyam Rupali)" />
+              <button id="btn-add-custom-font" type="button" class="btn primary">Add Font</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: APPEARANCE, ATMOSPHERE & BOOKMARKS -->
+        <section id="tab-appearance" class="tab-pane hidden">
+          <div class="section-block">
+            <h4>Identity & Display</h4>
+            <label>
+              <span>Page Monogram</span>
+              <input type="text" id="input-monogram" value="@siammehraf" maxlength="32" />
+            </label>
+            <label class="checkbox-row mt-8">
+              <input type="checkbox" id="toggle-24h" />
+              <span>Use 24-hour clock format</span>
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" id="toggle-show-category" checked />
+              <span>Show Category badge beside writer name</span>
+            </label>
+          </div>
+
+          <div class="section-block">
+            <h4>Atmosphere & Auto-Hide Controls</h4>
+            <label class="checkbox-row">
+              <input type="checkbox" id="toggle-idle-hide" checked />
+              <span>Auto-hide top-right action buttons when idle</span>
+            </label>
+            <label id="idle-delay-wrap" class="mt-8">
+              <span>Hide Delay (<output id="idle-delay-val">3</output>s)</span>
+              <input type="range" id="slider-idle-delay" min="1" max="15" step="1" value="3" />
+            </label>
+            <label class="checkbox-row mt-8">
+              <input type="checkbox" id="toggle-breathing-glow" checked />
+              <span>Subtle GPU breathing glow on dark gradients</span>
+            </label>
+          </div>
+
+          <div class="section-block">
+            <h4>Accent Color & Glass Opacity</h4>
+            <div class="accent-swatches" id="accent-swatches">
+              <button type="button" class="accent-dot active" data-accent="#5eead4" style="background:#5eead4" title="Midnight Teal"></button>
+              <button type="button" class="accent-dot" data-accent="#fbbf24" style="background:#fbbf24" title="Editorial Gold"></button>
+              <button type="button" class="accent-dot" data-accent="#fda4af" style="background:#fda4af" title="Soft Rose"></button>
+              <button type="button" class="accent-dot" data-accent="#93c5fd" style="background:#93c5fd" title="Nordic Sky"></button>
+              <button type="button" class="accent-dot" data-accent="#cbd5e1" style="background:#cbd5e1" title="Monochrome Silver"></button>
+              <input type="color" id="input-custom-accent" value="#5eead4" title="Custom Accent Color" />
+            </div>
+            <label class="mt-8">
+              <span>Glass Surface Opacity (<output id="glass-alpha-val">56</output>%)</span>
+              <input type="range" id="slider-glass-alpha" min="15" max="90" value="56" />
+            </label>
+          </div>
+
+          <div class="section-block">
+            <h4>Bookmarks Strip</h4>
+            <label class="checkbox-row">
+              <input type="checkbox" id="toggle-bookmarks-bar" />
+              <span>Show minimal glassy Bookmarks Strip below top bar</span>
+            </label>
+            <label id="bookmarks-folder-wrap" class="mt-8 hidden">
+              <span>Bookmarks Folder</span>
+              <select id="select-bookmarks-folder"></select>
+            </label>
+          </div>
+
+          <div class="section-block">
+            <h4>Ambient Background</h4>
+            <div class="gradient-swatches" id="gradient-swatches">
+              <button type="button" class="swatch active" data-grad="midnight" title="Midnight Teal & Plum"></button>
+              <button type="button" class="swatch" data-grad="obsidian" title="Obsidian Gold"></button>
+              <button type="button" class="swatch" data-grad="nordic" title="Nordic Slate"></button>
+              <button type="button" class="swatch" data-grad="paper" title="Warm Editorial Paper"></button>
+            </div>
+
+            <div class="row-actions mt-12">
+              <label class="btn secondary file-btn">
+                Upload Local Photo
+                <input type="file" id="bg-photo-input" accept="image/*" hidden />
+              </label>
+              <button id="btn-remove-photo" type="button" class="btn ghost small">Clear Photo</button>
+            </div>
+
+            <label class="checkbox-row mt-12">
+              <input type="checkbox" id="toggle-online-photo" />
+              <span>Enable daily curated online photo (cached offline)</span>
+            </label>
+
+            <div class="slider-group mt-12">
+              <label>
+                <span>Background Dim (<output id="dim-val">45</output>%)</span>
+                <input type="range" id="slider-dim" min="0" max="85" value="45" />
+              </label>
+              <label>
+                <span>Background Blur (<output id="blur-val">0</output>px)</span>
+                <input type="range" id="slider-blur" min="0" max="24" value="0" />
+              </label>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-title-row">
+              <h4>Shortcut Tiles (Up to 8)</h4>
+              <button id="btn-reset-hidden-sites" type="button" class="btn ghost small hidden">Restore Hidden</button>
+            </div>
+            <p class="helper-text">Right-click any tile on the homepage to Pin, Edit, or Hide it.</p>
+            <ul id="pinned-sites-list" class="quotes-list"></ul>
+            <button id="btn-open-site-modal-drawer" type="button" class="btn secondary mt-8">+ Add Favourite Site</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </aside>
+
+  <script src="quotes-bank.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

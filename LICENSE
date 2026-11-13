@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Siam Mehraf
+Copyright (c) 2026 Siam Mehraf (@siammehraf)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,6 +11,17 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+---
+
+THIRD-PARTY FONT NOTICE
+
+The bundled font file `fonts/NotoSerifBengali-Regular.ttf` is licensed under
+the SIL Open Font License, Version 1.1 (OFL-1.1).
+Copyright (c) Google LLC (https://fonts.google.com/noto/specimen/Noto+Serif+Bengali)
+
+This font software is licensed under the SIL Open Font License, Version 1.1.
+Full license text: https://openfontlicense.org
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
